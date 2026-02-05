@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Smart Style Assistant</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#2b2b2b;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.kiosk{
+    width:420px;
+    background:linear-gradient(#3a2f25,#1f1a16);
+    color:white;
+    padding:20px;
+    border-radius:20px;
+}
+
+h1{ text-align:center; color:#f1c27d; margin:5px; }
+.sub{ text-align:center; font-size:14px; opacity:0.8; }
+
+.tabs{ display:flex; margin:10px 0; }
+.tab{
+    flex:1; padding:10px; text-align:center;
+    background:#2a2623; border-radius:10px; margin:2px;
+}
+.activeTab{ background:#f1c27d; color:black; }
+
+.section{ margin:12px 0; }
+.label{ font-size:14px; margin-bottom:6px; }
+.options{ display:flex; gap:10px; }
+
+.card{
+    flex:1; padding:12px; text-align:center;
+    background:#2e2a27; border-radius:12px; cursor:pointer;
+}
+.selected{ background:#f1c27d; color:black; }
+
+button{
+    padding:12px; border:none; border-radius:10px; cursor:pointer;
+}
+.nextBtn{ width:100%; background:#f1c27d; }
+.backBtn{ background:#444; color:white; }
+
+.hidden{ display:none; }
+.discount{ text-align:center; margin-top:10px; font-size:13px; opacity:0.8; }
+</style>
+</head>
+
+<body>
+
+<div class="kiosk">
+
+<h1>Smart Style Assistant</h1>
+<div class="sub">Discover Your Perfect Look in Under 2 Minutes</div>
+
+<div class="tabs">
+<div id="tab1" class="tab activeTab">STEP 1/2</div>
+<div id="tab2" class="tab">STEP 2/2</div>
+</div>
+
+<!-- STEP 1 -->
+<div id="step1">
+
+<div class="section">
+<div class="label">I am:</div>
+<div class="options">
+<div class="card gender">Woman</div>
+<div class="card gender">Man</div>
+<div class="card gender">Other</div>
+</div>
+</div>
+
+<div class="section">
+<div class="label">Age:</div>
+<div class="options">
+<div class="card">18-25</div>
+<div class="card">26-35</div>
+<div class="card">36-45</div>
+<div class="card">46+</div>
+</div>
+</div>
+
+<button id="next1" class="nextBtn">Next</button>
+
+</div>
+
+<!-- STEP 2 WOMEN -->
+<div id="womenStep" class="hidden">
+
+<div class="section">
+<div class="label">Body Shape:</div>
+<div class="options">
+<div class="card">Pear</div>
+<div class="card">Apple</div>
+<div class="card">Rectangle</div>
+<div class="card">Hourglass</div>
+</div>
+</div>
+
+<div class="section">
+<div class="label">Shopping For:</div>
+<div class="options">
+<div class="card">Date / Dinner</div>
+<div class="card">Hangout / Daily</div>
+<div class="card">Formal</div>
+<div class="card">Party</div>
+</div>
+</div>
+
+<div class="section">
+<div class="label">Store Location:</div>
+<select style="width:100%; padding:12px; border-radius:10px;">
+<option>Mumbai</option>
+<option>Delhi</option>
+<option>Bangalore</option>
+<option>Pune</option>
+<option>Chennai</option>
+</select>
+</div>
+
+<div class="options">
+<button class="backBtn back">Back</button>
+<button class="nextBtn">Get My Recommendations</button>
+</div>
+
+</div>
+
+<!-- STEP 2 MEN -->
+<div id="menStep" class="hidden">
+
+<div class="section">
+<div class="label">Body Shape:</div>
+<div class="options">
+<div class="card">Lean / Slim</div>
+<div class="card">Athletic</div>
+<div class="card">Broad</div>
+<div class="card">Heavy</div>
+</div>
+</div>
+
+<div class="section">
+<div class="label">Shopping For:</div>
+<div class="options">
+<div class="card">Date / Dinner</div>
+<div class="card">Hangout / Daily</div>
+<div class="card">Formal</div>
+<div class="card">Party</div>
+</div>
+</div>
+
+<div class="section">
+<div class="label">Store Location:</div>
+<select style="width:100%; padding:12px; border-radius:10px;">
+<option>Mumbai</option>
+<option>Delhi</option>
+<option>Bangalore</option>
+<option>Pune</option>
+<option>Chennai</option>
+</select>
+</div>
+
+<div class="options">
+<button class="backBtn back">Back</button>
+<button class="nextBtn">Get My Recommendations</button>
+</div>
+
+</div>
+
+<div class="discount">Enjoy 10% Off Today's Picks!</div>
+
+</div>
+
+<script>
+
+// select highlight
+document.querySelectorAll('.card').forEach(c=>{
+    c.onclick=()=>{
+        c.parentElement.querySelectorAll('.card')
+        .forEach(x=>x.classList.remove('selected'));
+        c.classList.add('selected');
+    }
+});
+
+// NEXT logic
+document.getElementById("next1").onclick=()=>{
+    let g=document.querySelector(".gender.selected");
+    if(!g){ alert("Select gender"); return; }
+
+    step1.classList.add("hidden");
+    tab1.classList.remove("activeTab");
+    tab2.classList.add("activeTab");
+
+    if(g.innerText==="Woman"){
+        womenStep.classList.remove("hidden");
+    } else if(g.innerText==="Man"){
+        menStep.classList.remove("hidden");
+    }
+};
+
+// BACK logic
+document.querySelectorAll(".back").forEach(b=>{
+    b.onclick=()=>{
+        womenStep.classList.add("hidden");
+        menStep.classList.add("hidden");
+        step1.classList.remove("hidden");
+
+        tab2.classList.remove("activeTab");
+        tab1.classList.add("activeTab");
+    }
+});
+</script>
+
+</body>
+</html>
